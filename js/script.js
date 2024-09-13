@@ -12,9 +12,7 @@ let eventAction = {
     isKeyDown: false,
 }
 
-//  AOS.init();
-// const message = document.createElement('p');
-// zone.appendChild(message)
+
 
 function handleEventClick() {
     console.log('Event 1: Zone click');
@@ -79,14 +77,6 @@ function handleEventRightClick() {
         ],
         loop: false
     });
-    /*gsap.to("#zoneEvent", {
-        x: window.innerWidth - 100,  // Se déplace jusqu'à la largeur totale de la fenêtre
-        duration: 1,
-        ease: "power2.out",
-        yoyo: true,
-        repeat: -1,
-        ease: "bounce.out"
-    });*/
 }
 // Gestionnaire d'événement 3: Clic droit 
 // zone.addEventListener('contextmenu', handleEventRightClick);
@@ -109,31 +99,34 @@ function handleEventMouseOver() {
             isMouseOut: false,
             isKeyDown: false,
         }
-        anime({
+        animation = anime({
             targets: '#zoneEvent',
             scale: [
-                { value: 1, duration: 0 }, // Initial state
-                { value: 0.5, duration: 300, easing: 'easeInOutQuart' }, // Shrinking
-                { value: 1, duration: 300, easing: 'easeInOutQuart' }  // Back to original
+                { value: 1, duration: 0 }, 
+                { value: 0.5, duration: 300, easing: 'easeInOutQuart' }, 
+                { value: 1, duration: 300, easing: 'easeInOutQuart' }  
             ],
             translateX: [
-                { value: 0, duration: 0 }, // Initial state
-                { value: 50, duration: 300, easing: 'easeInOutQuart' }, // Moving
-                { value: 0, duration: 300, easing: 'easeInOutQuart' }  // Back to original
+                { value: 0, duration: 0 }, 
+                { value: 50, duration: 300, easing: 'easeInOutQuart' }, 
+                { value: 0, duration: 300, easing: 'easeInOutQuart' }
             ],
             translateY: [
-                { value: 0, duration: 0 }, // Initial state
-                { value: 50, duration: 300, easing: 'easeInOutQuart' }, // Moving
-                { value: 0, duration: 300, easing: 'easeInOutQuart' }  // Back to original
+                { value: 0, duration: 0 }, 
+                { value: 50, duration: 300, easing: 'easeInOutQuart' }, 
+                { value: 0, duration: 300, easing: 'easeInOutQuart' }  
             ],
             rotate: [
-                { value: 0, duration: 0 }, // Initial state
-                { value: 360, duration: 500, easing: 'easeInOutQuart' }, // Rotating
-                { value: 0, duration: 500, easing: 'easeInOutQuart' }  // Back to original
+                { value: 0, duration: 0 }, 
+                { value: 360, duration: 500, easing: 'easeInOutQuart' }, 
+                { value: 0, duration: 500, easing: 'easeInOutQuart' }  
             ],
             easing: 'easeInOutQuad',
             loop: false
         });
+        setTimeout(function () {
+            animation.pause();
+        }, 500);
     }
 }
 // Gestionnaire d'événement 4: mouseover
@@ -161,37 +154,7 @@ function handleEventMouseOut() {
         setTimeout(function () {
             zone.style.transform = 'translateX(0)';
         }, 500);
-        /*  anime({
-              targets: '#zoneEvent',
-              scale: [
-                { value: 2, duration: 200 },
-                { value: 0, duration: 600 }
-              ],
-              opacity: [
-                { value: 1, duration: 200 },
-                { value: 0, duration: 600 }
-              ],
-              easing: 'easeInOutQuad',
-              complete: function() {
-                zone.style.display = 'none';
-                setTimeout(function() {
-                  zone.style.display = 'block';
-      
-                  // Réinitialise les propriétés de la div
-                  anime({
-                    targets: '#zoneEvent',
-                    scale: 1,
-                    opacity: 1,
-                    duration: 0
-                  });
-                  confetti({
-                      particleCount: 100,
-                      spread: 70,
-                      origin: { y: 0.6 }
-                  });
-                }, 500); // Délai avant réapparition
-              }
-            }); */
+       
 
     }
 }
@@ -213,7 +176,7 @@ function handleEventKeyDown(key) {
             isMouseOut: false,
             isKeyDown: true,
         }
-       
+
     }
 }
 
@@ -227,14 +190,14 @@ document.addEventListener('keydown', function (event) {
 
 interact('#zoneEvent')
     .draggable({
-        // Enable dragging
+        
         listeners: {
             start(event) {
-                // You can add logic here if needed when drag starts
+               
                 console.log("draggable")
             },
             move(event) {
-                // Update the position of the dragged element
+               
                 if (eventAction.isClick) {
                     const x = (parseFloat(event.target.getAttribute('data-x')) || 0) + event.dx;
                     const y = (parseFloat(event.target.getAttribute('data-y')) || 0) + event.dy;
@@ -245,7 +208,7 @@ interact('#zoneEvent')
                 }
             },
             end(event) {
-                // Reset cursor style after dragging ends
+               
                 event.target.style.cursor = 'default';
             }
         }
@@ -254,18 +217,18 @@ interact('#zoneEvent')
         edges: { left: true, right: true, bottom: true, top: true },
         listeners: {
             start(event) {
-                // You can add logic here if needed when drag starts
+             
                 console.log("resize")
             },
             move(event) {
                 if (eventAction.isDoubleClick) {
                     let { x, y } = event.target.dataset;
 
-                    // Update the element's dimensions
+                   
                     event.target.style.width = `${event.rect.width}px`;
                     event.target.style.height = `${event.rect.height}px`;
 
-                    // Apply a transform to move the element
+                  
                     x = (parseFloat(x) || 0) + event.deltaRect.left;
                     y = (parseFloat(y) || 0) + event.deltaRect.top;
 
@@ -278,13 +241,13 @@ interact('#zoneEvent')
         }
     })
     .on('mouseover', (event) => {
-        // Optionally, change cursor style on mouseover
+        
         if (!event.target.style.cursor) {
             event.target.style.cursor = 'default';
         }
     })
     .on('dblclick', (event) => {
-        // Only allow resizing on double-click
+       
         console.log("dddd")
         event.target.style.cursor = 'nwse-resize';
     });
