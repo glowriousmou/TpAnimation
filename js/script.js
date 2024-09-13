@@ -147,7 +147,7 @@ function handleEventMouseOut() {
     if (!eventAction.isDoubleClick && !eventAction.isRightClick && !eventAction.isMouseOver) {
         console.log('Event 5: Zone mouseout');
         message.innerText = ""
-        message.innerText = " Event 5: Zone mouseout / confetti"
+        message.innerText = " Event 5: Zone mouseout / translation à droite"
         zone.style.backgroundColor = "green";
         eventAction = {
             isClick: false,
@@ -157,39 +157,41 @@ function handleEventMouseOut() {
             isMouseOut: true,
             isKeyDown: false,
         }
+        zone.style.transform = 'translateX(500px)';
+        setTimeout(function () {
+            zone.style.transform = 'translateX(0)';
+        }, 500);
+        /*  anime({
+              targets: '#zoneEvent',
+              scale: [
+                { value: 2, duration: 200 },
+                { value: 0, duration: 600 }
+              ],
+              opacity: [
+                { value: 1, duration: 200 },
+                { value: 0, duration: 600 }
+              ],
+              easing: 'easeInOutQuad',
+              complete: function() {
+                zone.style.display = 'none';
+                setTimeout(function() {
+                  zone.style.display = 'block';
       
-
-        anime({
-            targets: '#zoneEvent',
-            scale: [
-              { value: 2, duration: 200 },
-              { value: 0, duration: 600 }
-            ],
-            opacity: [
-              { value: 1, duration: 200 },
-              { value: 0, duration: 600 }
-            ],
-            easing: 'easeInOutQuad',
-            complete: function() {
-              zone.style.display = 'none';
-              setTimeout(function() {
-                zone.style.display = 'block';
-    
-                // Réinitialise les propriétés de la div
-                anime({
-                  targets: '#zoneEvent',
-                  scale: 1,
-                  opacity: 1,
-                  duration: 0
-                });
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-              }, 500); // Délai avant réapparition
-            }
-          });
+                  // Réinitialise les propriétés de la div
+                  anime({
+                    targets: '#zoneEvent',
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0
+                  });
+                  confetti({
+                      particleCount: 100,
+                      spread: 70,
+                      origin: { y: 0.6 }
+                  });
+                }, 500); // Délai avant réapparition
+              }
+            }); */
 
     }
 }
@@ -211,13 +213,14 @@ function handleEventKeyDown(key) {
             isMouseOut: false,
             isKeyDown: true,
         }
+       
     }
 }
 
 // Gestionnaire d'événement 6: keydown
 document.addEventListener('keydown', function (event) {
     // console.log(`//Touche ${event.key} pressée`);
-    handleEventKeyDown(event.key)
+    //handleEventKeyDown(event.key)
 });
 
 
@@ -285,4 +288,4 @@ interact('#zoneEvent')
         console.log("dddd")
         event.target.style.cursor = 'nwse-resize';
     });
- ///@@@GlowriousMou
+///@@@GlowriousMou
